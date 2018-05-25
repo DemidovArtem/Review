@@ -22,9 +22,9 @@ def make_extrapolation(_data, _predictions, _start_date, _end_date, _step):
 
     last_date = max(_data.keys())
 
-    norm = (last_date - _start_date).total_seconds() / num_of_seconds
+    date_diff = (last_date - _start_date).total_seconds() / num_of_seconds
 
-    a = 1
+    a = (data[last_date] - data[_start_date]) / date_diff
     b = _data[start_date]
 
     alpha = 0.00000001
@@ -36,7 +36,7 @@ def make_extrapolation(_data, _predictions, _start_date, _end_date, _step):
     while count > 0:
         for key in _data.keys():
             if key >= _start_date:
-                diff_in_date = ((key - _start_date).total_seconds() / num_of_seconds) / norm
+                diff_in_date = ((key - _start_date).total_seconds() / num_of_seconds)
 
                 dif_a = 2 * alpha * (_data[key] - (a * diff_in_date + b)) * diff_in_date
                 dif_b = 2 * alpha * (_data[key] - (a * diff_in_date + b))
@@ -49,7 +49,7 @@ def make_extrapolation(_data, _predictions, _start_date, _end_date, _step):
 
         count -= 1
 
-    _predictions[_end_date] = norm * a * (_end_date - _start_date).total_seconds() / num_of_seconds + b
+    _predictions[_end_date] = a * (_end_date - _start_date).total_seconds() / num_of_seconds + b
 
     _predictions[_start_date] = b
 
