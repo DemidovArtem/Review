@@ -62,6 +62,7 @@ def draw_results(_data, _predictions):
     ax.plot(_predictions.keys(), _predictions.values(), label='Predicted data', color='g', linestyle='--')
     ax.set_xlabel('Date')
     ax.set_ylabel('USD / EUR')
+    plt.show()
 
 
 data = dict()
@@ -74,9 +75,9 @@ set_data(data, beg_date, step, num_of_points, access_key)
 
 predictions = dict()
 
-end_date = beg_date + step * num_of_points
+end_date = beg_date + step * (num_of_points - 1)
 
-start_date = beg_date + step * (num_of_points - 3)
+start_date = beg_date + step * (num_of_points - 4)
 
 make_extrapolation(data, predictions, start_date, end_date, step)
 
