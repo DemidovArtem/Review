@@ -8,7 +8,8 @@ num_of_seconds = 60 * 60 * 24
 def set_data(_data, _beg_date, _step, _num_of_points, _access_key):
     '''Функция, которая получает исторические данные от даты _beg_date
      до даты _beg_date + num_of_steps * _step, где _step - промежуток между датами в днях
-     а num_of_steps - колличество точек, которые будут выбраны'''
+     а num_of_steps - колличество точек, которые будут выбраны. Параметр _access_key
+     задает ключ доступа, который позволяет получать данные с помощью get-запросов'''
 
     params = {'access_key': _access_key,
               'date': _beg_date,
@@ -39,7 +40,7 @@ def make_extrapolation(_data, _predictions, _step):
     _end_date = last_date + _step
 
     date_diff = (last_date - _start_date).total_seconds() / num_of_seconds
-    
+
     a = (data[last_date] - data[_start_date]) / date_diff
     b = _data[_start_date]
 
@@ -83,26 +84,30 @@ def draw_results(_data, _predictions):
     plt.show()
 
 
-data = dict()
+def main():
+    print('Введите дату начала интересующего вас периода в формате yyyy mm dd')
+    [yyyy, mm, dd] = input().split()
 
-print('Введите дату начала интересующего вас периода в формате yyyy mm dd')
-[yyyy, mm, dd] = input().split()
+    beg_date = datetime.date(int(yyyy), int(mm), int(dd))
 
-beg_date = datetime.date(int(yyyy), int(mm), int(dd))
+    print('Введите дату окончания интересующего вас периода в формате yyyy mm dd')
+    [yyyy, mm, dd] = input().split()
 
-print('Введите дату окончания интересующего вас периода в формате yyyy mm dd')
-[yyyy, mm, dd] = input().split()
+    print('Введите шаг в днях')
 
-print('Введите шаг в днях')
+    data = dict()
 
-step = datetime.timedelta(days=int(input()))
-num_of_points = int((min(datetime.date(int(yyyy), int(mm), int(dd)), datetime.date.today()
-                     - datetime.timedelta(days=1)) - beg_date).total_seconds() / step.total_seconds())
-access_key = '6ef4b29fd343c489baa9332571337fc1'
-predictions = dict()
+    step = datetime.timedelta(days=int(input()))
+    num_of_points = int((min(datetime.date(int(yyyy), int(mm), int(dd)), datetime.date.today()
+                         - datetime.timedelta(days=1)) - beg_date).total_seconds() / step.total_seconds())
+    access_key = '6ef4b29fd343c489baa9332571337fc1'
+    predictions = dict()
 
-set_data(data, beg_date, step, num_of_points, access_key)
+    set_data(data, beg_date, step, num_of_points, access_key)
 
-make_extrapolation(data, predictions, step)
+    make_extrapolation(data, predictions, step)
 
-draw_results(data, predictions)
+    draw_results(data, predictions)
+
+
+main()
