@@ -81,25 +81,30 @@ def make_extrapolation(_data, _predictions, _step):
     a = (_data[last_date] - _data[_start_date]) / date_diff
     b = _data[_start_date]
 
-    alpha = 0.00000001
+    alpha = 0.000001
 
     eps = 10 ** (-10)
 
     count = 1000000
 
+    dif_a = 0
+    dif_b = 0
+
     while count > 0:
         for key in _data.keys():
-            if key >= _start_date:
+            if key > _start_date:
                 diff_in_date = ((key - _start_date).total_seconds() / num_of_seconds)
 
-                dif_a = 2 * alpha * (_data[key] - (a * diff_in_date + b)) * diff_in_date
-                dif_b = 2 * alpha * (_data[key] - (a * diff_in_date + b))
+                dif_a += -2 * alpha * (_data[key] - (a * diff_in_date + b)) * diff_in_date
+                dif_b += -2 * alpha * (_data[key] - (a * diff_in_date + b))
 
-                a -= dif_a
-                b -= dif_b
-
-                if abs(dif_a) < eps and abs(dif_b) < eps:
-                    break
+        if abs(dif_a) < eps and abs(dif_b) < eps:
+            break
+        else:
+            a -= dif_a
+            b -= dif_b
+            dif_a = 0
+            dif_b = 0
 
         count -= 1
 
