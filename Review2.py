@@ -6,26 +6,42 @@ num_of_seconds = 60 * 60 * 24
 
 
 def set_data(_data, _beg_date, _step, _num_of_points, _access_key):
+    '''Функция, которая получает исторические данные от даты _beg_date
+     до даты _beg_date + num_of_steps * _step, где _step - промежуток между датами в днях
+     а num_of_steps - колличество точек, которые будут выбраны'''
 
     params = {'access_key': _access_key,
               'date': _beg_date,
               'currencies': 'EUR', 'format': 1}
 
     for i in range(_num_of_points):
-        response = requests.get("http://apilayer.net/api/historical", params=params)
-        result = response.json()
-        _data[params['date']] = result['quotes']['USDEUR']
-        params['date'] = (params['date'] + _step)
+        if datetime.date.today() > params['date']:
+            response = requests.get("http://apilayer.net/api/historical", params=params)
+            if response.status_code == 200:
+                result = response.json()
+                _data[params['date']] = result['quotes']['USDEUR']
+                params['date'] = (params['date'] + _step)
 
 
-def make_extrapolation(_data, _predictions, _start_date, _end_date, _step):
+def make_extrapolation(_data, _predictions, _step):
+    '''Данная функция находит апроксимационную прямую
+    по последним точкам графика с помощью линейной регрессии,
+    реализованной градиентным спуском. Эта прямая позволят прогнозировать
+    стоимость доллара в евро на дату, которая отстоит от последней из считанных
+    на время _step'''
+
+    _beg_date = min(_data.keys())
+
+    _start_date = max(_beg_date + step * (num_of_points - 4), _beg_date)
 
     last_date = max(_data.keys())
 
-    date_diff = (last_date - _start_date).total_seconds() / num_of_seconds
+    _end_date = last_date + _step
 
+    date_diff = (last_date - _start_date).total_seconds() / num_of_seconds
+    
     a = (data[last_date] - data[_start_date]) / date_diff
-    b = _data[start_date]
+    b = _data[_start_date]
 
     alpha = 0.00000001
 
@@ -50,11 +66,13 @@ def make_extrapolation(_data, _predictions, _start_date, _end_date, _step):
         count -= 1
 
     _predictions[_end_date] = a * (_end_date - _start_date).total_seconds() / num_of_seconds + b
-
     _predictions[_start_date] = b
 
 
 def draw_results(_data, _predictions):
+    '''Данная функция строит график стоимости доллара в евро по
+    историческим данным, а так же по значениям,
+    предсказанным с помощью впромаксиционной прямой'''
     plt.style.use('seaborn-whitegrid')
     fig = plt.figure(figsize=(19, 7))
     ax = plt.axes()
@@ -66,19 +84,25 @@ def draw_results(_data, _predictions):
 
 
 data = dict()
-beg_date = datetime.date(1999, 1, 31)
-step = datetime.timedelta(days=10)
-num_of_points = 8
+
+print('Введите дату начала интересующего вас периода в формате yyyy mm dd')
+[yyyy, mm, dd] = input().split()
+
+beg_date = datetime.date(int(yyyy), int(mm), int(dd))
+
+print('Введите дату окончания интересующего вас периода в формате yyyy mm dd')
+[yyyy, mm, dd] = input().split()
+
+print('Введите шаг в днях')
+
+step = datetime.timedelta(days=int(input()))
+num_of_points = int((min(datetime.date(int(yyyy), int(mm), int(dd)), datetime.date.today()
+                     - datetime.timedelta(days=1)) - beg_date).total_seconds() / step.total_seconds())
 access_key = '6ef4b29fd343c489baa9332571337fc1'
+predictions = dict()
 
 set_data(data, beg_date, step, num_of_points, access_key)
 
-predictions = dict()
-
-end_date = beg_date + step * (num_of_points - 1)
-
-start_date = beg_date + step * (num_of_points - 4)
-
-make_extrapolation(data, predictions, start_date, end_date, step)
+make_extrapolation(data, predictions, step)
 
 draw_results(data, predictions)
