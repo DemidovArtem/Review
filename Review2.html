@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Review2</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Review2</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Ctema%5Cpycharmprojects%5Cuntitled%5Creview2.py">c:\users\tema\pycharmprojects\untitled\review2.py</a></font></td></tr></table>
+    <p><tt>Review2&nbsp;-&nbsp;это&nbsp;программа,&nbsp;которая&nbsp;прогнозирует&nbsp;цену&nbsp;доллара&nbsp;в&nbsp;евро&nbsp;на&nbsp;дату,<br>
+отстоящую&nbsp;от&nbsp;последней&nbsp;из&nbsp;полученных&nbsp;данных&nbsp;на&nbsp;заданное&nbsp;пользователем&nbsp;кол-во&nbsp;дней.<br>
+&nbsp;<br>
+Пользователь&nbsp;воодит&nbsp;даты&nbsp;начала&nbsp;и&nbsp;конца&nbsp;интересующего&nbsp;его&nbsp;диапазона,&nbsp;а&nbsp;так&nbsp;же<br>
+шаг,&nbsp;на&nbsp;который&nbsp;даты&nbsp;из&nbsp;диапазона&nbsp;будут&nbsp;отстоят&nbsp;друг&nbsp;от&nbsp;друга.&nbsp;Далее&nbsp;программа&nbsp;получает<br>
+цены,&nbsp;соответсвующие&nbsp;этим&nbsp;датам,&nbsp;и&nbsp;прогнозирует&nbsp;цену&nbsp;на&nbsp;дату,&nbsp;отстоящую&nbsp;от&nbsp;опследней&nbsp;на&nbsp;значение&nbsp;шага.<br>
+&nbsp;<br>
+Данная&nbsp;программа&nbsp;является&nbsp;прототипом&nbsp;программы,&nbsp;которая&nbsp;получает<br>
+данные&nbsp;о&nbsp;ценаpydх&nbsp;валют&nbsp;за&nbsp;последние&nbsp;секунды&nbsp;и&nbsp;прогнозирует&nbsp;цены&nbsp;на&nbsp;доли&nbsp;секунд&nbsp;вперед.<br>
+(последняя&nbsp;не&nbsp;была&nbsp;реализована&nbsp;т.к.&nbsp;ключи&nbsp;доступа,&nbsp;которые&nbsp;некоторые&nbsp;ресурсы&nbsp;предоставляют&nbsp;бесплатно,<br>
+не&nbsp;позволяют&nbsp;получать&nbsp;данные&nbsp;о&nbsp;текующих&nbsp;ценах</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="datetime.html">datetime</a><br>
+</td><td width="25%" valign=top><a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+</td><td width="25%" valign=top><a href="requests.html">requests</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-draw_results"><strong>draw_results</strong></a>(_data, _predictions)</dt><dd><tt>Данная&nbsp;функция&nbsp;строит&nbsp;график&nbsp;стоимости&nbsp;доллара&nbsp;в&nbsp;евро&nbsp;по<br>
+историческим&nbsp;данным,&nbsp;а&nbsp;так&nbsp;же&nbsp;по&nbsp;значениям,<br>
+предсказанным&nbsp;с&nbsp;помощью&nbsp;впромаксиционной&nbsp;прямой.<br>
+&nbsp;<br>
+:_data:&nbsp;dict<br>
+:_predictions:&nbsp;dict<br>
+&nbsp;<br>
+:return:&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-main"><strong>main</strong></a>()</dt><dd><tt>Позволяет&nbsp;пользователю&nbsp;получить&nbsp;данные&nbsp;за&nbsp;указанный&nbsp;промежуток<br>
+с&nbsp;указанным&nbsp;шагом.&nbsp;В&nbsp;то&nbsp;же&nbsp;время&nbsp;строит&nbsp;апромаксиционную&nbsp;прямую,<br>
+которую&nbsp;вместе&nbsp;с&nbsp;реальными&nbsp;данными&nbsp;откладывает&nbsp;в&nbsp;осяц&nbsp;цена<br>
+дата.&nbsp;Полученный&nbsp;график&nbsp;выводится&nbsp;на&nbsp;экран<br>
+&nbsp;<br>
+:return:&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-make_extrapolation"><strong>make_extrapolation</strong></a>(_data, _predictions, _step)</dt><dd><tt>Данная&nbsp;функция&nbsp;находит&nbsp;апроксимационную&nbsp;прямую<br>
+по&nbsp;последним&nbsp;точкам&nbsp;графика&nbsp;с&nbsp;помощью&nbsp;линейной&nbsp;регрессии,<br>
+реализованной&nbsp;градиентным&nbsp;спуском.&nbsp;Эта&nbsp;прямая&nbsp;позволят&nbsp;прогнозировать<br>
+стоимость&nbsp;доллара&nbsp;в&nbsp;евро&nbsp;на&nbsp;дату,&nbsp;которая&nbsp;отстоит&nbsp;от&nbsp;последней&nbsp;из&nbsp;считанных<br>
+на&nbsp;время&nbsp;_step<br>
+&nbsp;<br>
+:_data:&nbsp;dict<br>
+:_predictions:&nbsp;dict<br>
+:step:&nbsp;timedelta<br>
+&nbsp;<br>
+:return:&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-set_data"><strong>set_data</strong></a>(_data, _beg_date, _step, _num_of_points, _access_key)</dt><dd><tt>Данная&nbsp;функция&nbsp;получает&nbsp;исторические&nbsp;данные&nbsp;от&nbsp;даты&nbsp;_beg_date<br>
+до&nbsp;даты&nbsp;_beg_date&nbsp;+&nbsp;num_of_steps&nbsp;*&nbsp;_step,&nbsp;где&nbsp;_step&nbsp;-&nbsp;промежуток&nbsp;между&nbsp;датами&nbsp;в&nbsp;днях<br>
+а&nbsp;num_of_steps&nbsp;-&nbsp;колличество&nbsp;точек,&nbsp;которые&nbsp;будут&nbsp;выбраны.&nbsp;Параметр&nbsp;_access_key<br>
+задает&nbsp;ключ&nbsp;доступа,&nbsp;который&nbsp;позволяет&nbsp;получать&nbsp;данные&nbsp;с&nbsp;помощью&nbsp;get-запросов<br>
+&nbsp;<br>
+:_data:&nbsp;dict<br>
+:_beg_date:&nbsp;date<br>
+:_step:&nbsp;temedelta<br>
+:_num_of_points:&nbsp;int<br>
+:_access_key:&nbsp;string<br>
+&nbsp;<br>
+:return:&nbsp;None</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>num_of_seconds</strong> = 86400</td></tr></table>
+</body></html>
