@@ -7,7 +7,8 @@
 
 ```tex
 L = (y - (ax + b))^2  
-\\
+```
+```tex
 \alpha - learning \ rate
 \\
 \Downarrow
