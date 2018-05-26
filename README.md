@@ -7,8 +7,7 @@
 
 ```tex
 L = (y - (ax + b))^2  
-```
-```tex
+\\
 \alpha - learning \ rate
 \\
 \Downarrow
@@ -34,6 +33,6 @@ L = (y - (ax + b))^2
 
 ![Regression_Analysis_Linear](C:\Users\Tema\Desktop\Regression_Analysis_Linear.gif)
 
-Документацию к программе можно найти по [этой](C:\Users\Tema\PycharmProjects\untitled\Review2.html ) ссылке.
+Документацию к программе можно найти по этой ссылке -[Документация](C:/Users/Tema/PycharmProjects/untitled/Review2.html).
 
 ###### Данная программа является прототипом. Итоговая версия будет брать данные за последние секунды или доли секунд в реальном времени и прогнозировать цены на доли секунд вперед.
