@@ -24,7 +24,7 @@ L = (y - (ax + b))^2
   b' = b - \frac{\partial L}{\partial b} \alpha\\
  \end{cases}
 \end{equation}
-![formula](https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1)
+<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1">
 
 Вычисление градиента loss-функции и измерение параметров `a` и `b` происходит для каждой из рассматриваемых точек в цикле, который включен во внешний цикл, который повторяет это до тех пор, пока не будет превышено предельное колличество эпох, или пока каждая из координат градиента не станет достаточно мала.
 
